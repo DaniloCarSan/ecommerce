@@ -2,8 +2,8 @@
     "name": "hcodebr/ecommerce",
     "authors": [
         {
-            "name": "",
-            "email": ""
+            "name": "Danilo Dos Santos Carreiro",
+            "email": "danilo.carreiro@etec.sp.giv.br"
         }
     ],
     "require": {
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "": "vendor\\hcodebr\\php-classes\\src"
+            "Hcode\\": "vendor\\hcodebr\\php-classes\\src"
         }
     }
 }

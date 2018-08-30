@@ -7,13 +7,11 @@ $app->config('debug', true);
 
 $app->get('/', function() {
     
-	echo "OK";
+	$sql= new Hcode\DB\Sql();
+	
 
 });
 
-$app->get('/home',function(){
-
-});
 
 $app->run();
 
