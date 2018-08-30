@@ -14,10 +14,10 @@ class Page {
 		    $this->options=array_merge($this->defaults,$opts);
 		
 			$config = array(
-
+                            "base_url"	    => "http://www.hcodecommerce.com.br/", 
 							"tpl_dir"       => $_SERVER['DOCUMENT_ROOT']."/views/",
 							"cache_dir"     => $_SERVER['DOCUMENT_ROOT']."/views-cache/",
-							
+
 						   );
 
 			Tpl::configure( $config );
