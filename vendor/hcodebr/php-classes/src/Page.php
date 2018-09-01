@@ -19,6 +19,7 @@ class Page {
                             "base_url"	    => "http://www.hcodecommerce.com.br/", 
 							"tpl_dir"       => $_SERVER['DOCUMENT_ROOT'].'/'.$tpl_dir,
 							"cache_dir"     => $_SERVER['DOCUMENT_ROOT']."/views-cache/",
+							'debudg'=>false
 
 						   );
 

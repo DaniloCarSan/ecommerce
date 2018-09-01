@@ -1,13 +1,19 @@
 <?php 
 session_name('lojavirtual');
 session_start();
+
+define('BASE_URL','http://www.hcodecommerce.com.br');
+define('ROOT',$_SERVER['DOCUMENT_ROOT']);
+
 require_once("vendor/autoload.php");
 use \Slim\Slim;
 use \Hcode\Page;
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
 
+
 $app = new Slim();
+
 
 $app->config('debug', true);
 
@@ -49,7 +55,7 @@ $app->get('/admin/login', function() {
 $app->post('/admin/login', function() {
 
 	User::login($_POST['login'],$_POST['password']);
-
+ 
 	header("location:/admin");
 
 	exit();
@@ -167,6 +173,79 @@ $app->post('/admin/users/:iduser',function($iduser){
 
 });
 
+$app->get('/admin/forgot',function(){
+
+    $page=new PageAdmin([
+        'header'=>false,
+        'footer'=>false
+
+    ]);
+    $page->setTpl('forgot'); 
+
+ 
+
+});
+
+$app->post('/admin/forgot',function(){
+
+    $user= User::getForgot($_POST['email']);
+
+       header('location: /admin/forgot/sent');
+       exit;
+
+});
+
+$app->get('/admin/forgot/sent',function(){
+     
+    $page=new PageAdmin([
+        'header'=>false,
+        'footer'=>false
+
+    ]);
+    $page->setTpl('forgot-sent'); 
+
+});
+
+$app->get('/admin/forgot/reset',function(){
+
+    $user=User::validForgotDecrypt($_GET['code']);
+
+    $page=new PageAdmin([
+        'header'=>false,
+        'footer'=>false
+
+    ]);
+    $page->setTpl('forgot-reset',array(
+      'name'=>$user['desperson'],
+      'code'=>$_GET['code']
+    )); 
+
+});
+
+
+$app->post('/admin/forgot/reset',function(){
+
+    $dataForgot=User::validForgotDecrypt($_POST['code']);
+
+    User::setForgotUsed($dataForgot['idrecovery']);
+
+    $user = new User();
+
+    $user->get((int)$dataForgot['iduser']);
+
+    $user->setPassword($_POST['password']);
+
+     $page=new PageAdmin([
+        'header'=>false,
+        'footer'=>false
+
+    ]);
+
+    $page->setTpl('forgot-reset-success'); 
+
+
+
+});
 
 
 
