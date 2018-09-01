@@ -1,0 +1,1 @@
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href='/category/amazon/14'>Amazon</a></li><li><a href='/category/aplets-amazom-filmes/16'>Aplets Amazom Filmes</a></li><li><a href='/category/apple/12'>Apple</a></li><li><a href='/category/google/11'>Google</a></li><li><a href='/category/microsoft/13'>Microsoft</a></li>

@@ -164,7 +164,7 @@ class User  extends Model {
 
             $code=  base64_encode(openssl_encrypt($dataRecovery['idrecovery'],'AES-128-ECB',User::SECRET));
 
-            $link=BASE_URL."/admin/forgot/reset?code=$code";
+            $link=BASE_URL."admin/forgot/reset?code=$code";
             exit;
             $mailer= new Mailer($data['desemail'],$data['desperson'],'Redefinir senha','forgot',array(
                'name'=>$data['desperson'],

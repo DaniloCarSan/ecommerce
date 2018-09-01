@@ -23,6 +23,8 @@ class Category  extends Model {
 
 
 		$this->setData($results[0]);
+        Category::updateFile();
+
 	}
 
 	public function get($idcategory){
@@ -49,6 +51,20 @@ class Category  extends Model {
 
 		));
 
+       Category::updateFile();
+
+	}
+
+	public static function updateFile(){
+
+		$categories=Category::listAll();
+		$html=[];
+
+		foreach ($categories as $key => $row) {
+		   array_push($html,"<li><a href='/category/".Slug($row['descategory']).'/'.$row['idcategory']."'>".$row['descategory']."</a></li>");
+		}
+
+		file_put_contents(ROOT.'views/categories-menu.html',implode('',$html));
 	}
 
 }
