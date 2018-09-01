@@ -1,13 +1,19 @@
-<?php 
+<?php  
 use \Hcode\Page;
 use \Hcode\Model\User;
+use \Hcode\Model\Products;
 
 $app->get('/', function() {
 
 	$page=new Page();
 
-	$page->setTpl('index');
+	$products= new Products();
 
-    exit();
+
+	$page->setTpl('index',[
+            "products"=>Products::checkList($products->listAll())
+	]);
+
+          exit();
     
 });

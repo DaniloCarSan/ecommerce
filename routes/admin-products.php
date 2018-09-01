@@ -94,7 +94,7 @@ $app->get('/admin/products/:idproduct/delete',function($idproduct){
        $product->get((int)$idproduct);
        
        $product->delete();
-       $product->deletePhoto();
+ 
 
        header('location: /admin/products');
        exit;
