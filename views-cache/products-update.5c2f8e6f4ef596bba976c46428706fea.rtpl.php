@@ -35,7 +35,7 @@
             <div class="form-group">
               <label for="vlheight">Altura</label>
               <input type="number" class="form-control" id="vlheight" name="vlheight" step="0.01" placeholder="0.00" value="<?php echo htmlspecialchars( $product["vlheight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
+            </div> 
             <div class="form-group">
               <label for="vllength">Comprimento</label>
               <input type="number" class="form-control" id="vllength" name="vllength" step="0.01" placeholder="0.00" value="<?php echo htmlspecialchars( $product["vllength"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -53,7 +53,11 @@
                 </div>
               </div>
             </div>
-          </div>
+               <div class="form-group"> 
+              <label for="vlweight">Descrição</label>
+              <textarea name="description" class="form-control" rows="6" id="editor1"><?php echo htmlspecialchars( $product["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea>
+            </div>
+          </div> 
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -67,7 +71,18 @@
 </section>
 <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+<!-- /.content-wrapper --> 
+<script src="<?php echo BASE_URL; ?>res/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+ <link rel="stylesheet" href="<?php echo BASE_URL; ?>res/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+ <!-- CK Editor -->
+<script src="<?php echo BASE_URL; ?>res/admin/plugins/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="<?php echo BASE_URL; ?>res/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+  $(document).ready(function() {
+    CKEDITOR.replace('editor1');
+  });
+</script>
 <script>
 document.querySelector('#file').addEventListener('change', function(){
   

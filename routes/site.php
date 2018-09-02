@@ -16,7 +16,7 @@ $app->get('/', function() {
             "products"=>Products::checkList($products->listAll())
 	]);
 
-          exit();
+   
     
 });
 
@@ -54,4 +54,24 @@ $app->get('/category/:category/:idcategory',function($categoryName,$idcategory){
      )); 
 
 
+
+}); 
+
+
+$app->get('/products/:desurl',function($desurl){
+    
+    $product= new Products();
+
+    $product->getFromURL($desurl);
+
+    $page=new Page();
+
+    $page->setTpl('product-detail',[
+            "product"=>$product->getValues(),
+            'categories'=>$product->getCategories()
+    ]);
+
+
 });
+
+

@@ -99,7 +99,7 @@ class Category  extends Model {
 
 	}
 
-	public function getProductsPage($page=1,$itensPerPage=3)
+	public function getProductsPage($page=1,$itensPerPage=12)
 	{
                      
                      $start= ( $page -1 ) * $itensPerPage ;
