@@ -10,7 +10,7 @@ class User  extends Model {
 	public static function login($login,$password){
 
 		$sql= new  Sql;
-		$results=$sql->select("SELECT * FROM tb_users WHERE deslogin=:LOGIN",array(
+		$results=$sql->select("SELECT iduser,idperson,inadmin,despassword,desperson FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE deslogin=:LOGIN",array(
            ":LOGIN"=>$login
 		));
 
@@ -41,19 +41,19 @@ class User  extends Model {
 
 	public static function verifyLogin($inadmin=true){
          
-         if (
-         	  !isset($_SESSION[User::SESSION])
-         	  ||
-         	  !$_SESSION[User::SESSION]
-         	  ||
-         	  !(int)$_SESSION[User::SESSION]['iduser']>0
-         	  ||
-         	  (bool)$_SESSION[User::SESSION]['inadmin'] !== $inadmin
-            )
-         {
-         	header('location:/admin/login');
-         	exit;
-         }
+	         if (
+	         	  !isset($_SESSION[User::SESSION])
+	         	  ||
+	         	  !$_SESSION[User::SESSION]
+	         	  ||
+	         	  !(int)$_SESSION[User::SESSION]['iduser']>0
+	         	  ||
+	         	  (bool)$_SESSION[User::SESSION]['inadmin'] !== $inadmin
+	            )
+	         {
+	         	header('location:/admin/login');
+	         	exit;
+	         }
 	} 
 
 	public static function logout(){
