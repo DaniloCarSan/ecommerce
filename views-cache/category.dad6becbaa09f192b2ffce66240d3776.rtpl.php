@@ -14,6 +14,8 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
+            <?php if( count($products)>0 ){ ?>
+
             <?php $counter1=-1;  if( isset($products) && ( is_array($products) || $products instanceof Traversable ) && sizeof($products) ) foreach( $products as $key1 => $value1 ){ $counter1++; ?> 
             <div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
@@ -32,6 +34,13 @@
             </div>
             <?php } ?>
 
+            <?php }else{ ?>
+
+              <div class="col-sm-12 text-center">
+                  <h2>Nenhum Resultado Encontrado</h2>
+              </div>
+            <?php } ?>
+
         </div>
         
         <div class="row">
@@ -39,21 +48,22 @@
                 <div class="product-pagination text-center">
                     <nav>
                         <ul class="pagination">
-                        <li>
+                       <!--  <li>
                             <a href="#" aria-label="Previous">
                             <span aria-hidden="true">«</span>
                             </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
+                        </li> -->
+                        <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>
+
+                        <li class='<?php if( $pageAtual==$value1["page"] ){ ?>active<?php } ?>' ><a href="<?php echo htmlspecialchars( $value1["link"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["page"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+                        <?php } ?>
+
+                      
+                        <!-- <li>
                             <a href="#" aria-label="Next">
                             <span aria-hidden="true">»</span>
                             </a>
-                        </li>
+                        </li> -->
                         </ul>
                     </nav>                        
                 </div>

@@ -14,6 +14,7 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
+            {if="count($products)>0"}
             {loop="$products"} 
             <div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
@@ -31,6 +32,11 @@
                 </div>
             </div>
             {/loop}
+            {else}
+              <div class="col-sm-12 text-center">
+                  <h2>Nenhum Resultado Encontrado</h2>
+              </div>
+            {/if}
         </div>
         
         <div class="row">
@@ -38,21 +44,20 @@
                 <div class="product-pagination text-center">
                     <nav>
                         <ul class="pagination">
-                        <li>
+                       <!--  <li>
                             <a href="#" aria-label="Previous">
                             <span aria-hidden="true">«</span>
                             </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
+                        </li> -->
+                        {loop="$pages"}
+                        <li class='{if="$pageAtual==$value.page"}active{/if}' ><a href="{$value.link}">{$value.page}</a></li>
+                        {/loop}
+                      
+                        <!-- <li>
                             <a href="#" aria-label="Next">
                             <span aria-hidden="true">»</span>
                             </a>
-                        </li>
+                        </li> -->
                         </ul>
                     </nav>                        
                 </div>
