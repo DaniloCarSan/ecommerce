@@ -65,7 +65,7 @@ $app->get('/products/:desurl',function($desurl){
 
     $product->getFromURL($desurl);
 
-    $page=new Page();
+    $page=new Page(['data'=>['active'=>'home']]);
 
     $page->setTpl('product-detail',[
             "product"=>$product->getValues(),
@@ -84,7 +84,54 @@ $app->get('/cart',function(){
     $page->setTpl('cart');
     
      
+});
+
+$app->get('/cart/:idproduct/add',function($idproduct){
+
+    $product = new Products();
+
+    $product->get((int)$idproduct);
+
+    $cart= Cart::getFromSession();
+
+    $cart->addProdut($product);
+    
+    header('location /cart');
+    exit;
 
 });
+
+
+$app->get('/cart/:idproduct/minius',function($idproduct){
+
+    $product = new Products();
+
+    $product->get((int)$idproduct);
+
+    $cart= Cart::getFromSession();
+
+    $cart->removeProdut($product);
+    
+    header('location /cart');
+    exit;
+
+});
+
+
+$app->get('/cart/:idproduct/remove',function($idproduct){
+
+    $product = new Products();
+
+    $product->get((int)$idproduct);
+
+    $cart= Cart::getFromSession();
+
+    $cart->removeProdut($product,true);
+    
+    header('location /cart');
+    exit;
+
+});
+
 
 
