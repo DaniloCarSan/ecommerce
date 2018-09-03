@@ -7,6 +7,56 @@ class User  extends Model {
 	const SESSION="User";
 	const SECRET='2k7sd0p2k9f8k5u5ssm598d00h3x7am3';
 
+	public static function getFromSession()
+	{
+		$user= new User();
+
+		if (isset($_SESSION[User::SESSION]) && (int)$_SESSION[User::SESSION]['iduser']>0)
+		{
+			$user->setData($_SESSION[User::SESSION]);
+			
+		}
+
+	     return $user;
+	}
+
+
+	public static function checkLogin($inadmin=true)
+	{
+		if ( !isset($_SESSION[User::SESSION])
+	         	||
+	         	!$_SESSION[User::SESSION]
+	         	||
+	         	!(int)$_SESSION[User::SESSION]['iduser']>0
+	         	)
+		{
+			return false;
+		}
+		else
+		{
+
+              if ($inadmin===true  && (bool)$_SESSION[User::SESSION]['inadmin']===true)
+              {
+
+              	return true;
+              
+              }
+              else if($inadmin===false)
+              {
+
+              	 return true;
+
+              }
+              else
+              {
+              	  return false;
+              }
+		}
+
+	}
+
+
+
 	public static function login($login,$password){
 
 		$sql= new  Sql;
@@ -26,7 +76,7 @@ class User  extends Model {
 
 			$user = new User();
 			$user->setData($data);
-
+               $user->checkPhoto(); 
 			$_SESSION[User::SESSION]=$user->getValues();
   		    
   		    return $user;
@@ -41,15 +91,7 @@ class User  extends Model {
 
 	public static function verifyLogin($inadmin=true){
          
-	         if (
-	         	  !isset($_SESSION[User::SESSION])
-	         	  ||
-	         	  !$_SESSION[User::SESSION]
-	         	  ||
-	         	  !(int)$_SESSION[User::SESSION]['iduser']>0
-	         	  ||
-	         	  (bool)$_SESSION[User::SESSION]['inadmin'] !== $inadmin
-	            )
+	         if (!User::checkLogin($inadmin))
 	         {
 	         	header('location:/admin/login');
 	         	exit;
@@ -67,12 +109,28 @@ class User  extends Model {
         return  $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson)  ORDER BY b.desperson");
 	}
 
-	public function save(){
+	public static function checkList($list){
+            
+            foreach ($list as &$row) {
+            	 
+                 $p=new User;
+                 $p->setData($row);
+                 $row=$p->getValues();
+
+            }
+
+            return $list;
+
+	}
+
+
+
+	 public function save(){
         $sql= new Sql;
 		$results=$sql->select("CALL sp_users_save( :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)",array(
 			          ":desperson"=>$this->getdesperson(),
 			          ":deslogin"=>$this->getdeslogin(),
-			          ":despassword"=>password_hash($this->getdespassword(),PASSWORD_DEFAULT),
+			          ":despassword"=>password_hash($this->getdespassword(),PASSWORD_DEFAULT,['cost'=>12]),
 			          ":desemail"=>$this->getdesemail(),
 			          ":nrphone"=>$this->getnrphone(),
 			          ":inadmin"=>$this->getinadmin()
@@ -120,9 +178,21 @@ class User  extends Model {
          
 	    $sql= new Sql;
 
-        $sql->query("CALL sp_users_delete(:iduser)",array(
+         $sql->query("CALL sp_users_delete(:iduser)",array(
         	":iduser"=>$this->getiduser()
         ));
+
+         $image=$_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.
+				                    "res".DIRECTORY_SEPARATOR.
+				                   "site".DIRECTORY_SEPARATOR.
+				                    "img".DIRECTORY_SEPARATOR.
+				                "user".DIRECTORY_SEPARATOR.
+				                    $this->getiduser().'.jpg';
+
+		if (file_exists($image))
+		{
+	            unlink($image);
+		}
 
         
 	}
@@ -235,6 +305,85 @@ class User  extends Model {
          ':password'=>password_hash($password,PASSWORD_DEFAULT,['cost'=>12]),
          ':iduser'=>$this->getiduser()
 		));
+ 
+	}
+
+	public function setPhoto($file)
+	{
+
+ 		$extension=explode('.',$file['name']); 
+                    $extension=end($extension);
+ 		
+
+ 		switch ($extension)
+ 		{
+ 			case 'jpg':
+ 			case 'jpeg':
+ 			$image=imagecreatefromjpeg($file['tmp_name']);
+ 			break;
+
+ 			case 'gif':
+ 			$image=imagecreatefromgif($file['tmp_name']);
+ 			break;
+
+ 			case 'png':
+ 			$image=imagecreatefrompng($file['tmp_name']);	
+ 			break;
+ 			
+ 			
+ 		}
+
+ 		$dist=$_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.
+				                    "res".DIRECTORY_SEPARATOR.
+				                   "site".DIRECTORY_SEPARATOR.
+				                    "img".DIRECTORY_SEPARATOR.
+				                "user".DIRECTORY_SEPARATOR.
+				                    $this->getiduser().'.jpg';
+
+ 		imagejpeg($image,$dist,60);
+ 		imagedestroy($image);
+ 		$this->checkPhoto();
+
+	}
+
+		public function checkPhoto()
+	{
+
+		 if (file_exists(
+				$_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.
+				                    "res".DIRECTORY_SEPARATOR.
+				                   "site".DIRECTORY_SEPARATOR.
+				                    "img".DIRECTORY_SEPARATOR.
+				                "user".DIRECTORY_SEPARATOR.
+				                    $this->getiduser().'.jpg'
+			      )
+		    )
+		 {
+			
+		          $url= "/res/site/img/user/".$this->getiduser().'.jpg';
+
+		 } 
+		 else
+		 {
+                         
+		          $url= "/res/site/img/user.png";
+
+
+		 }
+
+		return  $this->setdesphoto($url);
+
+
+	} 
+
+	public  function getValues()
+	{
+
+	     $this->checkPhoto();
+
+		$values=parent::getValues();
+
+		return $values;     			
 
 	}
 

@@ -18,7 +18,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/admin/users/<?php echo htmlspecialchars( $user["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+        <form role="form" action="/admin/users/<?php echo htmlspecialchars( $user["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
           <div class="box-body">
             <div class="form-group">
               <label for="desperson">Nome</label>
@@ -41,6 +41,15 @@
                 <input type="checkbox" name="inadmin" value="1" <?php if( $user["inadmin"] == 1 ){ ?>checked<?php } ?>> Acesso de Administrador
               </label>
             </div>
+               <div class="form-group">
+              <label for="file">Foto</label>
+              <input type="file" class="form-control" id="file" name="desphoto" >
+              <div class="box box-widget"> 
+                <div class="box-body">
+                  <img class="img-responsive center-block" id="image-preview" src="<?php echo htmlspecialchars( $user["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
+                </div>
+              </div>
+            </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -48,10 +57,26 @@
           </div>
         </form>
       </div>
-  	</div>
+  	</div> 
   </div>
 
 </section>
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+document.querySelector('#file').addEventListener('change', function(){
+  
+  var file = new FileReader();
+
+  file.onload = function() {
+    
+    document.querySelector('#image-preview').src = file.result;
+
+  }
+
+  file.readAsDataURL(this.files[0]);
+
+});
+</script>
+

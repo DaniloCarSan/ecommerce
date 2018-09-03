@@ -73,7 +73,6 @@
  <link rel="stylesheet" href="<?php echo BASE_URL; ?>res/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
  <!-- CK Editor -->
 <script src="<?php echo BASE_URL; ?>res/admin/plugins/ckeditor/ckeditor.js"></script>
-
 <!-- Bootstrap WYSIHTML5 -->
 <script src="<?php echo BASE_URL; ?>res/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script>

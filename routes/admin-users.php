@@ -1,17 +1,17 @@
 <?php 
-use \Hcode\PageAdmin;
+use \Hcode\PageAdmin; 
 use \Hcode\Model\User;
 
 $app->get('/admin/users',function(){
 
     User::verifyLogin();
 
-    $users= User::listAll(); 
+    $user= new User(); 
 
 	$page = new PageAdmin();
 
 	$page->setTpl('users',array(
-      "users"=>$users
+      "users"=>$user->checkList(User::listAll()) 
 	));
 
     exit();
@@ -97,8 +97,16 @@ $app->post('/admin/users/:iduser',function($iduser){
 
     $user->update();
 
-    header('location:/admin/users');
 
+     if (!empty($_FILES['desphoto']['name']) && !empty($_FILES['desphoto']['tmp_name']))
+          {
+
+              $user->setPhoto($_FILES['desphoto']);
+          }  
+
+
+   
+    header('location:/admin/users');
     exit();
 
 });

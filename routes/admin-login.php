@@ -5,7 +5,7 @@ use \Hcode\Model\User;
 
 $app->get('/admin', function() {
 
-    User::verifyLogin();
+    User::verifyLogin((bool)$_SESSION['User']['inadmin']);
 
 	$page=new PageAdmin();
 
@@ -16,7 +16,8 @@ $app->get('/admin', function() {
 }); 
 
 $app->get('/admin/login', function() {
-    
+
+
 	$page=new PageAdmin([
 		'header'=>false,
 		'footer'=>false

@@ -23,7 +23,7 @@ class Category  extends Model {
 
 
 		$this->setData($results[0]);
-        Category::updateFile();
+                    Category::updateFile();
 
 	}
 
@@ -33,7 +33,7 @@ class Category  extends Model {
 
 		$results=$sql->select("SELECT * FROM tb_categories WHERE idcategory=:idcategory",array(
 
-          ":idcategory"=>$idcategory
+                     ":idcategory"=>$idcategory
 
 		));
 

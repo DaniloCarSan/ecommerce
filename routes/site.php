@@ -3,11 +3,12 @@ use \Hcode\Page;
 use \Hcode\Model\User;
 use \Hcode\Model\Category;
 use \Hcode\Model\Products;
+use \Hcode\Model\Cart;
 
 
 $app->get('/', function() {
 
-	$page=new Page();
+	$page=new Page(['data'=>['active'=>'home']]);
 
 	$products= new Products();
 
@@ -43,7 +44,7 @@ $app->get('/category/:category/:idcategory',function($categoryName,$idcategory){
      }
     
 
-     $page=new Page();
+     $page=new Page(['data'=>['active'=>'product']]);
      $page->setTpl('category',array(
 
          "category"=>$category->getValues(),
@@ -71,6 +72,20 @@ $app->get('/products/:desurl',function($desurl){
             'categories'=>$product->getCategories()
     ]);
 
+
+});
+
+$app->get('/cart',function(){
+
+    $cart = Cart::getFromSession();
+
+    $page=new Page(['data'=>['active'=>'cart']]);
+
+     $page->setTpl('cart',[
+         
+    ]);
+    
+     
 
 });
 

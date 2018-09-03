@@ -49,7 +49,7 @@
               <label>
                 <input type="checkbox" name="inadmin" value="1"> Acesso de Administrador
               </label>
-            </div>
+            </div> 
           </div>
           <!-- /.box-body -->
           <div class="box-footer">

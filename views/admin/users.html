@@ -27,7 +27,8 @@
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>
-                    <th>Nome</th>
+                    <th style="width: 60px">#</th>
+                    <th>Nome</th> 
                     <th>E-mail</th>
                     <th>Login</th>
                     <th style="width: 60px">Admin</th>
@@ -38,6 +39,7 @@
                   {loop="$users"}
                   <tr>
                     <td>{$value.iduser}</td>
+                    <td><img src="{$value.desphoto}" alt="{$value.desperson}"  class="user-image img-circle img-responsive "></td>
                     <td>{$value.desperson}</td>
                     <td>{$value.desemail}</td>
                     <td>{$value.deslogin}</td/>
