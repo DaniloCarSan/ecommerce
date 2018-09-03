@@ -81,9 +81,7 @@ $app->get('/cart',function(){
 
     $page=new Page(['data'=>['active'=>'cart']]);
 
-     $page->setTpl('cart',[
-         
-    ]);
+    $page->setTpl('cart');
     
      
 
